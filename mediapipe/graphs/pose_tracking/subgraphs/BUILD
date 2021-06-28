@@ -32,6 +32,8 @@ mediapipe_simple_subgraph(
         "//mediapipe/calculators/util:landmarks_to_render_data_calculator",
         "//mediapipe/calculators/util:rect_to_render_data_calculator",
         "//mediapipe/calculators/util:rect_to_render_scale_calculator",
+        "//posetracking:form_recognition_calculator",
+        "//posetracking:string_to_render_data_calculator",
     ],
 )
 
@@ -46,5 +48,7 @@ mediapipe_simple_subgraph(
         "//mediapipe/calculators/util:landmarks_to_render_data_calculator",
         "//mediapipe/calculators/util:rect_to_render_data_calculator",
         "//mediapipe/calculators/util:rect_to_render_scale_calculator",
+        "//posetracking:form_recognition_calculator",
+        "//posetracking:string_to_render_data_calculator",
     ],
 )
