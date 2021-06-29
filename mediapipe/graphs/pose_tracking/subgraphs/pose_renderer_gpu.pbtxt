@@ -239,7 +239,7 @@ node {
 # Form recognition
 node {
   calculator: "FormRecognitionCalculator"
-  input_stream: "NORM_LANDMARKS:landmarks
+  input_stream: "NORM_LANDMARKS:landmarks"
   output_stream: "FEEDBACK:text_to_put"
 }
 

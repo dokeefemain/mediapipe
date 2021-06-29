@@ -15,7 +15,7 @@
 #include "tensorflow/lite/kernels/register.h"
 #include "mediapipe/util/resource_util.h"
 #if defined(MEDIAPIPE_ANDROID)
-#include "tensorflow/lite/delegates/nnapi/nnapi_delegate.h"
+//#include "tensorflow/lite/delegates/nnapi/nnapi_delegate.h"
 #endif  // ANDROID
 void stringToFile();
 std::string feedBack_word;
@@ -44,8 +44,8 @@ REGISTER_CALCULATOR(FormRecognitionCalculator);
     RET_CHECK(cc->Inputs().HasTag(normalizedLandmarkListTag));
     cc->Inputs().Tag(normalizedLandmarkListTag).Set<mediapipe::NormalizedLandmarkList>();
 
-    if (cc->Outputs().HasTag("Feed Back:")) {
-    cc->Outputs().Tag("Feed Back:").Set<std::string>();
+    if (cc->Outputs().HasTag("FEEDBACK")) {
+    cc->Outputs().Tag("FEEDBACK").Set<std::string>();
 
   }
     return ::mediapipe::OkStatus();
@@ -58,7 +58,7 @@ REGISTER_CALCULATOR(FormRecognitionCalculator);
     return ::mediapipe::OkStatus();
 }
 
-::mediapipe::Status HandGestureRecognitionCalculator::Process(
+::mediapipe::Status FormRecognitionCalculator::Process(
     CalculatorContext *cc)
 {
     const auto &landmarkList = cc->Inputs()
@@ -68,28 +68,29 @@ REGISTER_CALCULATOR(FormRecognitionCalculator);
     try
     {
         //wrist elbow shoulder hip knee ankle
-        float var_x [12] = [landmarkList.landmark(15).x(),landmarkList.landmark(16).x(),landmarkList.landmark(13).x(),landmarkList.landmark(14).x(),landmarkList.landmark(11).x(),landmarkList.landmark(12).x(),landmarkList.landmark(23).x(),landmarkList.landmark(24).x(),landmarkList.landmark(25).x(),landmarkList.landmark(26).x(),landmarkList.landmark(27).x(),landmarkList.landmark(28).x()];
-        float var_y [12] = [landmarkList.landmark(15).y(),landmarkList.landmark(16).y(),landmarkList.landmark(13).y(),landmarkList.landmark(14).y(),landmarkList.landmark(11).y(),landmarkList.landmark(12).y(),landmarkList.landmark(23).y(),landmarkList.landmark(24).y(),landmarkList.landmark(25).y(),landmarkList.landmark(26).y(),landmarkList.landmark(27).y(),landmarkList.landmark(28).y()];
+        float var_x [12] = {landmarkList.landmark(15).x(),landmarkList.landmark(16).x(),landmarkList.landmark(13).x(),landmarkList.landmark(14).x(),landmarkList.landmark(11).x(),landmarkList.landmark(12).x(),landmarkList.landmark(23).x(),landmarkList.landmark(24).x(),landmarkList.landmark(25).x(),landmarkList.landmark(26).x(),landmarkList.landmark(27).x(),landmarkList.landmark(28).x()};
+        float var_y [12] = {landmarkList.landmark(15).y(),landmarkList.landmark(16).y(),landmarkList.landmark(13).y(),landmarkList.landmark(14).y(),landmarkList.landmark(11).y(),landmarkList.landmark(12).y(),landmarkList.landmark(23).y(),landmarkList.landmark(24).y(),landmarkList.landmark(25).y(),landmarkList.landmark(26).y(),landmarkList.landmark(27).y(),landmarkList.landmark(28).y()};
 
     }
     catch (int e)
     {
-        LOG(INFO) << "Looking For Target";
+        LOG(INFO) << "LFT";
         if (cc->Outputs().HasTag("FEEDBACK")) {
     cc->Outputs().Tag("FEEDBACK").AddPacket(
-        MakePacket<std::string>("Looking For Target")
+        MakePacket<std::string>("LFT")
             .At(cc->InputTimestamp()));
            }
         return ::mediapipe::OkStatus();
     }
 
-    feedBack_word = "This is test"
+    feedBack_word = "Test";
 
     if (cc->Outputs().HasTag("FEEDBACK")) {
     cc->Outputs().Tag("FEEDBACK").AddPacket(
-        MakePacket<std::string>(ASL_Word)
+        MakePacket<std::string>(feedBack_word)
             .At(cc->InputTimestamp()));
            }
     return ::mediapipe::OkStatus();
     //Add golf form math with output here
+}
 }
